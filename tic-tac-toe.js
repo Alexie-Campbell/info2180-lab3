@@ -10,6 +10,8 @@ window.onload= function(){
       if (square.tagName == 'DIV') {
             square.setAttribute("class", "square");
             square.addEventListener("click", squareClicked);
+            square.addEventListener("mouseover", squareHoverTrue);
+            square.addEventListener("mouseout", squareHoverFalse);
       }
   }
 }
@@ -40,4 +42,14 @@ function squareClicked(){
      pushElement("X", thisSquare);
     }
   }
+}
+
+function squareHoverTrue(){
+  let thisSquare = this;
+  thisSquare.classList.add("hover");
+}
+
+function squareHoverFalse(){
+  let thisSquare = this;
+  thisSquare.classList.remove("hover");
 }
