@@ -26,39 +26,48 @@ window.onload= function(){
 var playBoard = [];
 var playPositionsX = [];
 var playPositionsO = [];
+var gameEnded= false;
 
 const winScenarios= [['1','2','3'],['4','5','6'],['7','8','9'],['1','4','7'],['2','5','8'],['3','6','9'],['1','5','9'],['3','5','7']];
 //winScenarios include arrays of the possible wins (order does not matter)
 //for example array [1,2,3] would also work if the player played [3,2,1] or [2,3,1] or [1,3,2] etc
 
 function pushElement(el, object){
+  if(gameEnded==false){
   var element = el;
   let thisSquare = object;
+  var thisSquareID = thisSquare.id;
+  var thisSquarePos= thisSquareID.replace("pos","");
+  if (playPositionsX.includes(thisSquarePos)||playPositionsO.includes(thisSquarePos)){
+    //do nothing
+  }
+  else{
   playBoard.push(element);
   console.log(playBoard);
   thisSquare.innerHTML = element;
   thisSquare.classList.add(element);
 
-  var thisSquareID = thisSquare.id;
-  var thisSquarePos= thisSquareID.replace("pos","");
-  if (element == "X"){
-    playPositionsX.push(thisSquarePos);
-    console.log(playPositionsX);
-    var winX = checkSequence(playPositionsX);
-    console.log("successFlag"+winX);
-    if (winX){
-      announceWin("X");
+    if (element == "X"){
+      playPositionsX.push(thisSquarePos);
+      console.log(playPositionsX);
+      var winX = checkSequence(playPositionsX);
+      console.log("successFlag"+winX);
+      if (winX){
+        announceWin("X");
+      }
+    }
+    else{
+      playPositionsO.push(thisSquarePos);
+      console.log(playPositionsO);
+      var winO = checkSequence(playPositionsO);
+      console.log("successFlag"+winO);
+      if (winO){
+        announceWin("O");
+      }
     }
   }
-  else{
-    playPositionsO.push(thisSquarePos);
-    console.log(playPositionsO);
-    var winO = checkSequence(playPositionsO);
-    console.log("successFlag"+winO);
-    if (winO){
-      announceWin("O");
-    }
-  }
+}
+
 }
 
 function announceWin(el){
@@ -66,6 +75,7 @@ function announceWin(el){
   var status = document.getElementById("status");
   status.classList.add("you-won");
   status.innerHTML="Congratulations! "+winner+" is the Winner!";
+  gameEnded=true;
 }
 
 function checkSequence(arrPos){
@@ -113,6 +123,7 @@ function squareHoverFalse(){
 
 function resetGame(){
   console.log("game is reset");
+  gameEnded=false;
   playBoard = [];
   playPositionsX = [];
   playPositionsO = [];
