@@ -14,11 +14,18 @@ window.onload= function(){
             square.addEventListener("mouseout", squareHoverFalse);
       }
   }
+
+
+  var newGameBtn = document.getElementsByClassName("controls")[0].getElementsByClassName("btn")[0];
+  newGameBtn.addEventListener("click", resetGame);
 }
 
-const playBoard = [];
-const playPositionsX = [];
-const playPositionsO = [];
+
+
+
+var playBoard = [];
+var playPositionsX = [];
+var playPositionsO = [];
 
 const winScenarios= [['1','2','3'],['4','5','6'],['7','8','9'],['1','4','7'],['2','5','8'],['3','6','9'],['1','5','9'],['3','5','7']];
 //winScenarios include arrays of the possible wins (order does not matter)
@@ -101,4 +108,22 @@ function squareHoverTrue(){
 function squareHoverFalse(){
   let thisSquare = this;
   thisSquare.classList.remove("hover");
+}
+
+
+function resetGame(){
+  console.log("game is reset");
+  playBoard = [];
+  playPositionsX = [];
+  playPositionsO = [];
+  var status = document.getElementById("status");
+  status.classList.remove("you-won");
+  status.innerHTML="Move your mouse over a square and click to play an X or an O.";
+  for (let i = 0; i < board.children.length; i++) {
+      var square = board.children[i];
+      if (square.tagName == 'DIV') {
+            square.innerHTML="";
+            square.classList.remove("X","O");
+      }
+   }
 }
